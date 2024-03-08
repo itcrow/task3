@@ -16,7 +16,7 @@ services:
         build:
             context: ./
             dockerfile: docker/dev/Dockerfile
-        user: "1000:1000"
+        user:  ${USER}
         volumes:
             - ./src:/app:delegated
         networks:
