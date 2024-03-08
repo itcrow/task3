@@ -1,0 +1,26 @@
+services:
+    web:
+        image: nginx:latest
+        ports:
+            - "8081:80"
+        volumes:
+            - ./src:/app
+            - ./docker/dev/site.conf:/etc/nginx/conf.d/default.conf
+            - /private/var/log/nginx:/var/log/nginx
+        networks:
+            - dev-network
+        depends_on:
+            - php
+
+    php:
+        build:
+            context: ./
+            dockerfile: docker/dev/Dockerfile
+        user: "1000:1000"
+        volumes:
+            - ./src:/app:delegated
+        networks:
+            - dev-network
+networks:
+    dev-network:
+        driver: bridge
